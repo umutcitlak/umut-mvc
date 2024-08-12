@@ -1,0 +1,22 @@
+{
+    "name": "umut/template",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Core\\": "core/",
+            "Vendor\\": "vendor/",
+            "App\\Controllers\\": "src/controllers/",
+            "App\\Models\\": "src/models/",
+            "App\\Views\\": "src/views/"
+        },
+        "files": [
+            "core/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "umut ÇITLAK"
+        }
+    ],
+    "require": {}
+}
