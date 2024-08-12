@@ -7,6 +7,6 @@
     }
     echo $name;
     echo "<br>";
-    echo $param;
+    print_r($users)
     ?>
 </p>
