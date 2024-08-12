@@ -17,6 +17,6 @@ class HomeController extends Controller
         
        $users= $user->findById(1);
 
-        return $this->view('index', ['name' => 'umut', 'users' => $users]);
+        return $this->viewLayout('index','layout');
     }
 }
