@@ -15,8 +15,15 @@ class HomeController extends Controller
     {
         $user = new User();
         
-       $users= $user->findById(1);
+       $users= $user->all();
 
-        return $this->viewLayout('index','layout');
+        return $this->viewLayout('index','layout', ['users' => $users]);
+    }
+    public function create()
+    {
+        $user = new User();
+        $user->ID = 1;
+        dd($user);
+
     }
 }

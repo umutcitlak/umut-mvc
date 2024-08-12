@@ -33,13 +33,13 @@ class Controller
     public function viewLayout(string $viewname, string $layoutname , array $data = [])
     {
         extract($data);
-        $viewcontext = "";
+        $viewcontent = "";
         ob_start(); // Çıktı tamponunu başlat
         include  $this->viewPath . $this->getClassName() . '/' . $viewname . '.php';
         $çıktı = ob_get_contents(); // Çıktıyı değişkene al
         ob_end_clean(); // Çıktı tamponunu temizle
 
-        $viewcontext = $çıktı; // Çıktıyı ekrana yazdır
+        $viewcontent = $çıktı; // Çıktıyı ekrana yazdır
 
         include_once __DIR__ . '/../src/views/layouts/' . $layoutname . '.php';
     }

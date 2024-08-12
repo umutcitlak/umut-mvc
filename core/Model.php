@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use App\Models\User;
 use PDO;
 use PDOException;
 use Exception;
@@ -21,7 +22,6 @@ class Model
         $table = $this->getClassName();
         // sadece ilk harfini küçültür
         $this->table = lcfirst($table);
-
     }
 
     public function getClassName()
@@ -62,7 +62,7 @@ class Model
 
     public function all()
     {
-
+        $this->variableNames();
         // Check if database connection is established before executing the query
         if ($this->db === null) {
             throw new Exception('Database connection not established');
@@ -83,36 +83,10 @@ class Model
         }
     }
 
-    public function create($data)
+    public function create(User $user)
     {
-        // Check if database connection is established before executing the query
-        if ($this->db === null) {
-            throw new Exception('Database connection not established');
-        }
-
-        // Check if table name is set
-        if (empty($this->table)) {
-            throw new Exception('Table name is not set');
-        }
-
-        // Check if data is provided
-        if (empty($data)) {
-            throw new Exception('Data is required to create a new record');
-        }
-
-        // Extract keys of the data array
-        $keys = array_keys($data);
-
-        // Prepare the SQL query
-        $query = $this->db->prepare("INSERT INTO $this->table (" . implode(',', $keys) . ") VALUES (:" . implode(',:', $keys) . ")");
-
-        // Bind values to the query
-        foreach ($data as $key => $value) {
-            $query->bindValue(':' . $key, $value);
-        }
-
-        // Execute the query
-        return $query->execute();
+       
+        
     }
 
     public function update($id, $data)
@@ -157,6 +131,16 @@ class Model
         if ($this->db === null) {
             throw new Exception('Database connection not established');
         }
+    }
 
+    public function variableNames()
+    {
+        $childvars = array_keys(get_class_vars(get_class($this)));
+        
+        $parentVars = array_keys(get_class_vars(Model::class));
+        
+
+        $vars = array_diff($childvars, $parentVars);
+    return $vars;
     }
 }
