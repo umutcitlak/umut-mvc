@@ -20,7 +20,7 @@ class Patient extends Model
         parent::__construct();
 
         $this->dogumTarihi=new DateTime('now');
-        dd($this->dogumTarihi->format('d.m.y'));
+       
 
     }
 
