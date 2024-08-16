@@ -120,60 +120,46 @@ use Exception;
 
     }
 
+       
     public function update($id, $data)
     {
-        // Check if database connection is established before executing the query
-        if ($this->db === null) {
-            throw new Exception('Database connection not established');
-        }
-
-        // Check if table name is set
-        if (empty($this->table)) {
-            throw new Exception('Table name is not set');
-        }
-
-        // Check if data is provided
-        if (empty($data)) {
-            throw new Exception('Data is required to update the record');
-        }
-
-        // Extract keys of the data array
         $keys = array_keys($data);
-
+    
         // Prepare the SQL query
-        $query = $this->db->prepare("UPDATE $this->table SET " . implode(',:', $keys) . " WHERE id = :id");
-
+        $setClause = implode(' = :, ', $keys) . ' = :' . end($keys);
+        $query = $this->db->prepare("UPDATE $this->table SET $setClause WHERE id = :id");
+    
         // Bind values to the query
         foreach ($data as $key => $value) {
             $query->bindValue(':' . $key, $value);
         }
-
+    
         // Bind the ID parameter
         $query->bindValue(':id', $id);
-
+    
         // Execute the query
         return $query->execute();
     }
-
-
+    
     public function delete($id)
     {
         // Check if database connection is established before executing the query
         if ($this->db === null) {
             throw new Exception('Database connection not established');
         }
+    
+        // Prepare and execute the delete query
+        $query = $this->db->prepare("DELETE FROM $this->table WHERE id = :id");
+        $query->bindValue(':id', $id);
+        return $query->execute();
     }
-
+    
     public function variableNames()
     {
         $childvars = array_keys(get_class_vars(get_class($this)));
-
-
         $parentVars = array_keys(get_class_vars(Model::class));
-
-
         $vars = array_diff($childvars, $parentVars);
-
+    
         return $vars;
     }
 }
