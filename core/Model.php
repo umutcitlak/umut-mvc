@@ -3,13 +3,14 @@
 namespace Core;
 
 use App\Models\User;
+use App\Models\Patient;
 use PDO;
 use PDOException;
 use Exception;
 
 // MVC için base bir model sınıfı oluştur
 
-class Model
+ class Model
 {
     // Veritabanı bağlantısı için PDO nesnesi
     private $db;
@@ -59,7 +60,7 @@ class Model
         }
     }
 
-
+// tum verileri cek tamamlandı  
     public function all()
     {
         $this->variableNames();
@@ -83,10 +84,40 @@ class Model
         }
     }
 
-    public function create(User $user)
+    public function create()
     {
-       
+
+        // Check if database connection is established before executing the query
+        if ($this->db === null) {
+            throw new Exception('Database connection not established');
+        }
+
+        // Check if table name is set
+
+        if (empty($this->table)) {
+            throw new Exception('Table name is not set');
+        }
+
+
+        // Prepare the SQL query
+        $columns = implode(', ', array_values($this->variableNames()));
+
+        $placeholders = ' :' . implode(', :', array_values($this->variableNames()));
         
+        $query = $this->db->prepare("INSERT INTO $this->table ($columns) VALUES ($placeholders)");
+
+        // Bind values to the query
+
+        foreach ($this->variableNames() as $key) {
+            $query->bindValue(':' . $key, strval($this->$key));
+            
+        }
+      
+        // Execute the query
+        $query->execute();
+
+
+
     }
 
     public function update($id, $data)
@@ -136,11 +167,13 @@ class Model
     public function variableNames()
     {
         $childvars = array_keys(get_class_vars(get_class($this)));
-        
+
+
         $parentVars = array_keys(get_class_vars(Model::class));
-        
+
 
         $vars = array_diff($childvars, $parentVars);
-    return $vars;
+
+        return $vars;
     }
 }

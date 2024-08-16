@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Patient;
 use App\Models\User;
 use Core\Controller;
 
@@ -21,9 +22,16 @@ class HomeController extends Controller
     }
     public function create()
     {
-        $user = new User();
-        $user->ID = 1;
-        dd($user);
-
+        // $user = new User();
+        
+        // $user->name = "Ali";
+        // $user->lastname = "Veli";
+        // $user->create();
+        $pt=new Patient() ;
+        $pt->name="ali";
+        $pt->lastName="şahin"; 
+        
+        $pt->create();
+      
     }
 }

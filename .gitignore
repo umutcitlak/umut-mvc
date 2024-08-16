@@ -1,6 +1,7 @@
-
+resource/*
 .idea/*
 .idea_modules/*
 *.iml
 .vscode/*
 *.code-workspace
+assets/*
