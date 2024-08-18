@@ -4,10 +4,8 @@ namespace Core;
 
 class Route
 {
-
     public function router()
     {
-
         $controller = "App\\Controllers\\HomeController";
         $method = "index";
         $param = "";
@@ -27,12 +25,22 @@ class Route
                 $param = $url[2];
             }
 
-            $controller = new $controller();
-
-            $controller->$method($param);
+            if (class_exists($controller)) {
+                $controllerInstance = new $controller();
+                if (method_exists($controllerInstance, $method)) {
+                    $controllerInstance->$method($param);
+                } else {
+                    // Handle method not found
+                    $method = "index";
+                    
+                }
+            } else {
+                // Handle controller not found
+                $controller = "App\\Controllers\\HomeController";
+            }
         } else {
-            $controller = new $controller("Home");
-            $controller->$method($param);
+            $controllerInstance = new $controller();
+            $controllerInstance->$method($param);
         }
     }
 }

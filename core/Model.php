@@ -10,7 +10,7 @@ use Exception;
 
 // MVC için base bir model sınıfı oluştur
 
- class Model
+class Model
 {
     // Veritabanı bağlantısı için PDO nesnesi
     private $db;
@@ -20,9 +20,7 @@ use Exception;
     {
         // Veritabanı bağlantısını başlat
         $this->db = Database::getDb();
-        $table = $this->getClassName();
-        // sadece ilk harfini küçültür
-        $this->table = lcfirst($table);
+        $this->table = $this->getClassName(); // Correctly assign to $this->table
     }
 
     public function getClassName()
@@ -33,8 +31,6 @@ use Exception;
         $class = lcfirst($class);
         return $class;
     }
-
-
 
     public function findById($id)
     {
@@ -50,11 +46,12 @@ use Exception;
 
         try {
             $query = $this->db->prepare("SELECT * FROM $this->table WHERE id = :id");
-            $query->bindParam(':id', $id);
+            // Bind the id parameter
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
             $query->execute();
-
-            return $query->fetch();
+            return $query->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+
             // Handle any PDO exceptions that occur during the query execution
             throw new Exception('Error executing the query: ' . $e->getMessage());
         }
@@ -161,5 +158,9 @@ use Exception;
         $vars = array_diff($childvars, $parentVars);
     
         return $vars;
+
+            throw new Exception('Database query error: ' . $e->getMessage());
+        }
+
     }
 }

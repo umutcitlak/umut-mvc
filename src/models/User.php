@@ -4,9 +4,7 @@ use Core\Model;
 
 class User extends Model
 {
-   public $ID=0;
-   public $name;
-   public $lastname;
-   
-
+   public $ID = 0;
+   public $name = '';
+   public $lastname = '';
 }

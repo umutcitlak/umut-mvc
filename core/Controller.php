@@ -6,7 +6,6 @@ class Controller
 {
     protected $viewPath = __DIR__ . '/../src/views/';
 
-
     public function getClassName()
     {
         // böyle bir değer geliyor App\Controllers\HomeController sadece Home kısmını almak istiyorum
@@ -18,7 +17,6 @@ class Controller
 
     public function view(string $viewname, array $data = [])
     {
-        
         extract($data);
         $filePath = $this->viewPath . $this->getClassName() . '/' . $viewname . '.php';
 
@@ -36,10 +34,10 @@ class Controller
         $viewcontent = "";
         ob_start(); // Çıktı tamponunu başlat
         include  $this->viewPath . $this->getClassName() . '/' . $viewname . '.php';
-        $çıktı = ob_get_contents(); // Çıktıyı değişkene al
+        $output = ob_get_contents(); // Çıktıyı değişkene al
         ob_end_clean(); // Çıktı tamponunu temizle
 
-        $viewcontent = $çıktı; // Çıktıyı ekrana yazdır
+        $viewcontent = $output; // Çıktıyı ekrana yazdır
 
         include_once __DIR__ . '/../src/views/layouts/' . $layoutname . '.php';
     }
