@@ -22,6 +22,7 @@ class Database
                 echo "Connection failed: " . $e->getMessage();
                 exit;
             }
+
         }
     }
 
@@ -29,7 +30,6 @@ class Database
     {
         if (self::$db === null) {
             new self();
-        }
-        return self::$db;
     }    
+
 }
