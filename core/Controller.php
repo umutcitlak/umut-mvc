@@ -44,6 +44,16 @@ class Controller
 
     public function jsonResult($data)
     {
-        echo json_encode($data);
+        if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            header('Content-Type: application/json');
+            echo json_encode($data);
+            exit;
+        }else
+        {
+            echo json_encode("geçersiz istek");
+        }
+
+
     }
 }

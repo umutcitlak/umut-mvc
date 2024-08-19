@@ -22,6 +22,7 @@ class HomeController extends Controller
     }
     public function create()
     {
+
         // $user = new User();
         
         // $user->name = "Ali";
@@ -33,5 +34,13 @@ class HomeController extends Controller
         
         $pt->create();
       
+    }
+    public  function users()
+    {
+        
+        $user = new User();
+
+        $users= $user->all();
+        return $this->jsonResult($users);
     }
 }
