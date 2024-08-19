@@ -32,4 +32,6 @@ class Database
             new self();
     }    
 
+        return self::$db;
+    }
 }
