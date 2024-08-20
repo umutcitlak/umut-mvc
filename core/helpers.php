@@ -8,3 +8,9 @@ if (!function_exists('dd')) {
         die();
     }
 }
+
+// sesion açılmışmı kullanıcı olup olmadığını kontrol edin
+function isLoggedIn()
+{
+    if( isset($_SESSION['user']));
+}

@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>burası layout</h1>
-   <?php echo $viewcontext;?>
+    <h1>This is the admin layout</h1>
+    <?php echo $viewcontext; ?>
 </body>
 </html>
